@@ -1,6 +1,7 @@
 package com.uwjx.mongo.service;
 
 import com.mongodb.*;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
@@ -17,47 +18,42 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Service
-public class MongoCurdService implements ApplicationContextAware , InitializingBean {
+public class MongoCurdService  {
 
-    MongoClient mongoClient;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        log.warn("setApplicationContext");
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        log.warn("afterPropertiesSet");
-
-        ServerAddress serverAddress = new ServerAddress("uwjx.com");
-
-
-        MongoClientOptions clientOptions = MongoClientOptions.builder()
-                .build();
-
-        MongoCredential credential = MongoCredential.createCredential(
-                "admin",
-                "admin",
-                "".toCharArray()
-        );
-        mongoClient = new MongoClient(serverAddress , credential,clientOptions);
-
-        MongoIterable<String> dbs = mongoClient.listDatabaseNames();
-        MongoCursor<String> dbCursor = dbs.iterator();
-        while (dbCursor.hasNext()){
-            String dbName = dbCursor.next();
-            log.warn("db : {}" , dbName);
-        }
-
-        MongoDatabase database = mongoClient.getDatabase("admin");
-        MongoIterable<String>  mongoIterable = database.listCollectionNames();
-        MongoCursor<String> collectionCursor = mongoIterable.cursor();
-        while (collectionCursor.hasNext()){
-            String collection  = collectionCursor.next();
-            log.warn("collection -> {}" , collection);
-        }
-
-
-    }
+//    MongoClient mongoClient;
+//
+//
+//    public void afterPropertiesSet() throws Exception {
+//        log.warn("afterPropertiesSet");
+//
+//        ServerAddress serverAddress = new ServerAddress("uwjx.com");
+//
+//
+//        MongoClientOptions clientOptions = MongoClientOptions.builder()
+//                .build();
+//
+//        MongoCredential credential = MongoCredential.createCredential(
+//                "admin",
+//                "admin",
+//                "".toCharArray()
+//        );
+//        mongoClient = new MongoClient(serverAddress , credential,clientOptions);
+//
+//        MongoIterable<String> dbs = mongoClient.listDatabaseNames();
+//        MongoCursor<String> dbCursor = dbs.iterator();
+//        while (dbCursor.hasNext()){
+//            String dbName = dbCursor.next();
+//            log.warn("db : {}" , dbName);
+//        }
+//
+//        MongoDatabase database = mongoClient.getDatabase("admin");
+//        MongoIterable<String>  mongoIterable = database.listCollectionNames();
+//        MongoCursor<String> collectionCursor = mongoIterable.cursor();
+//        while (collectionCursor.hasNext()){
+//            String collection  = collectionCursor.next();
+//            log.warn("collection -> {}" , collection);
+//        }
+//
+//
+//    }
 }
